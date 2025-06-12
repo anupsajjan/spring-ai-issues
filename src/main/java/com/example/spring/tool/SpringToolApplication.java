@@ -16,36 +16,36 @@ import java.time.LocalDateTime;
 @SpringBootApplication
 public class SpringToolApplication implements CommandLineRunner {
 
-	private final ChatClient chatClient;
+    private final ChatClient chatClient;
 
-	@Autowired
-	UtilTool currentDateTime;
+    @Autowired
+    UtilTool currentDateTime;
 
-	SpringToolApplication(ChatClient.Builder chatClient){
+    SpringToolApplication(ChatClient.Builder chatClient) {
 
         this.chatClient = chatClient.build();
     }
 
-	public static void main(String[] args) {
+    public static void main(String[] args) {
 
-		SpringApplication.run(SpringToolApplication.class, args);
-	}
+        SpringApplication.run(SpringToolApplication.class, args);
+    }
 
-	@Override
-	public void run(String... args) throws Exception {
-		ChatOptions chatOptions= OllamaOptions.builder()
-				.model("llama3.2:latest")
-				.toolNames("getCurrentDateTime")
-				.temperature(0.4)
-				.topK(2)
-				.numCtx(8192)
-				.build();
-		ChatClient.CallResponseSpec responseSpec= chatClient.prompt("What is the current date")
-				.options(chatOptions)
-				.call();
-		System.out.println("response "+responseSpec.content().toString());
+    @Override
+    public void run(String... args) throws Exception {
+        ChatOptions chatOptions = OllamaOptions.builder()
+                .model("llama3.2:latest")
+                .toolNames("getCurrentDateTime")
+                .temperature(0.4)
+                .topK(2)
+                .numCtx(8192)
+                .build();
+        ChatClient.CallResponseSpec responseSpec = chatClient.prompt("What is the current date")
+                .options(chatOptions)
+                .call();
+        System.out.println("response " + responseSpec.content().toString());
 
-	}
+    }
 }
 
 
