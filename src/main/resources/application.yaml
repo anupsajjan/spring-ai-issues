@@ -1,0 +1,6 @@
+spring:
+  application.name: spring-tool
+  ai:
+    ollama:
+      chat:
+       model: llama3.2:latest
