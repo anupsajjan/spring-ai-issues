@@ -3,6 +3,8 @@ package com.example.spring.tool;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.ChatClientResponse;
 import org.springframework.ai.chat.model.ChatResponse;
+import org.springframework.ai.chat.prompt.ChatOptions;
+import org.springframework.ai.ollama.api.OllamaOptions;
 import org.springframework.ai.tool.annotation.Tool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -26,14 +28,21 @@ public class SpringToolApplication implements CommandLineRunner {
 
 	public static void main(String[] args) {
 
-
 		SpringApplication.run(SpringToolApplication.class, args);
 	}
 
 	@Override
 	public void run(String... args) throws Exception {
-
-		ChatClient.CallResponseSpec responseSpec= chatClient.prompt("What is the current date").toolNames("getCurrentDateTime").call();
+		ChatOptions chatOptions= OllamaOptions.builder()
+				.model("llama3.2:latest")
+				.toolNames("getCurrentDateTime")
+				.temperature(0.4)
+				.topK(2)
+				.numCtx(8192)
+				.build();
+		ChatClient.CallResponseSpec responseSpec= chatClient.prompt("What is the current date")
+				.options(chatOptions)
+				.call();
 		System.out.println("response "+responseSpec.content().toString());
 
 	}

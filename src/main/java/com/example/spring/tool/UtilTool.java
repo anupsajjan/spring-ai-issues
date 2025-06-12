@@ -9,11 +9,10 @@ import java.time.LocalDateTime;
 @Component
 public class UtilTool {
 
-    @Autowired
-    CurrentDateTime currentDateTime;
+
 
     @Tool(description = "this method provide current date and time ")
     String getCurrentDateAndTime(){
-        return currentDateTime.getCurrentDateTime();
+         return LocalDateTime.now().toString();
     }
 }
